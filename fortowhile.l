@@ -1,15 +1,26 @@
 %{
-#include <stdio.h>
+    #include <stdio.h>
+    #include <string.h>
 %}
 
+KW_WHILE "while"
+LPAREN   "("
+RPAREN   ")"
+LBRACE   "{"
+RBRACE   "}"
+
 %%
-"while"   { printf("for"); }
-"(i<n)"     { printf("(int i=0;i<n;i++)\n"); }
-"{"     { printf("{\n"); }
-"}"     { printf("\n}"); }
-.|\n    { printf("%s", yytext); }
+{KW_WHILE}             { printf("for"); }
+{LPAREN}               { printf("("); }
+[a-zA-Z][a-zA-Z0-9]*   { printf("%s", yytext); }
+{RPAREN}               { printf(") "); }
+{LBRACE}               { printf("{ "); }
+{RBRACE}               { printf("} "); }
+.                      { printf("%s", yytext); }
 %%
- int yywrap(void){return 1;}
+
+int yywrap(){}
+
 int main() {
     yylex();
     return 0;
